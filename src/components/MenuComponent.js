@@ -40,6 +40,7 @@ class Menu extends Component {
 			</div>
 		);
 	}
+	cd;
 }
 
 export default Menu;
