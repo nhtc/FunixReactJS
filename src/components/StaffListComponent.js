@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { ListGroup, ListGroupItem } from "reactstrap";
+import {
+	ListGroup,
+	ListGroupItem,
+	Card,
+	CardBody,
+	CardText,
+	CardTitle,
+} from "reactstrap";
 import dateFormat from "dateformat";
 class StaffList extends Component {
 	constructor(props) {
@@ -16,15 +23,27 @@ class StaffList extends Component {
 		if (staff != null) {
 			return (
 				<div className="col-6">
-					<h1>Họ và tên: {staff.name}</h1>
-					<p>Ngày sinh: {dateFormat(staff.doB, "dd/mm/yyyy")}</p>
-					<p>
-						Ngày vào công ty:{" "}
-						{dateFormat(staff.startDate, "dd/mm/yyyy")}
-					</p>
-					<p>Phòng ban: {staff.department.name}</p>
-					<p>Số ngày nghỉ: {staff.annualLeave}</p>
-					<p>Số ngày đã làm thêm: {staff.overTime}</p>
+					<Card>
+						<CardBody>
+							<CardTitle>Họ và tên: {staff.name}</CardTitle>
+							<CardText>
+								Ngày sinh: {dateFormat(staff.doB, "dd/mm/yyyy")}
+							</CardText>
+							<CardText>
+								Ngày vào công ty:{" "}
+								{dateFormat(staff.startDate, "dd/mm/yyyy")}
+							</CardText>
+							<CardText>
+								Phòng ban: {staff.department.name}
+							</CardText>
+							<CardText>
+								Số ngày nghỉ: {staff.annualLeave}
+							</CardText>
+							<CardText>
+								Số ngày đã làm thêm: {staff.overTime}
+							</CardText>
+						</CardBody>
+					</Card>
 				</div>
 			);
 		} else {
