@@ -70,9 +70,7 @@ class StaffList extends Component {
 		return (
 			<div className="container-fluid text-left">
 				<div className="row">{listStaff}</div>
-				<p style={{ "text-align": "left" }}>
-					Bấm vào tên nhân viên để xem thông tin
-				</p>
+				<p>Bấm vào tên nhân viên để xem thông tin</p>
 				<div className="row">
 					<div className="col-12">
 						{this.renderStaff(this.state.selectedStaff)}
