@@ -58,6 +58,11 @@ class StaffList extends Component {
 				<div className={temp} key={staff.id}>
 					<ListGroup>
 						<ListGroupItem
+							className={
+								staff === this.state.selectedStaff
+									? " bg-secondary text-info font-weight-bold font-italic"
+									: ""
+							}
 							style={{ margin: 2 }}
 							onClick={() => {
 								this.onStaffSelected(staff);
