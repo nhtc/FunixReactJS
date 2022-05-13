@@ -22,7 +22,7 @@ class StaffList extends Component {
 	renderStaff(staff) {
 		if (staff != null) {
 			return (
-				<div className="col-6">
+				<div className="col-lg-6 col-sm-12">
 					<Card>
 						<CardBody>
 							<CardTitle>Họ và tên: {staff.name}</CardTitle>
@@ -51,12 +51,13 @@ class StaffList extends Component {
 		}
 	}
 	render() {
+		const temp = `col-lg-${12 / this.props.columns} col-md-6 col-sm-12`;
 		const listStaff = this.props.staffs.map((staff) => {
 			return (
-				<div className="col-6 ">
+				<div className={temp} key={staff.id}>
 					<ListGroup>
 						<ListGroupItem
-							key={staff.id}
+							style={{ margin: 2 }}
 							onClick={() => {
 								this.onStaffSelected(staff);
 							}}

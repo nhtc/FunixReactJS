@@ -1,6 +1,7 @@
 import "./App.css";
-import { Navbar, NavbarBrand, Row } from "reactstrap";
+import { Navbar, NavbarBrand } from "reactstrap";
 import StaffList from "./components/StaffListComponent";
+import ColumnPicker from "./components/ColumnPickerComponent";
 import { STAFFS } from "./shared/staffs";
 import React, { Component } from "react";
 
@@ -9,8 +10,13 @@ class App extends Component {
 		super(props);
 		this.state = {
 			staffs: STAFFS,
+			columns: 4,
 		};
 	}
+	onSetColumn = (column) => {
+		console.log(column);
+		this.setState({ columns: column });
+	};
 	render() {
 		return (
 			<div className="App">
@@ -21,7 +27,14 @@ class App extends Component {
 						</NavbarBrand>
 					</div>
 				</Navbar>
-				<StaffList staffs={this.state.staffs} />
+				<ColumnPicker
+					columns={this.state.columns}
+					onRecieveColumn={this.onSetColumn}
+				/>
+				<StaffList
+					staffs={this.state.staffs}
+					columns={this.state.columns}
+				/>
 			</div>
 		);
 	}
