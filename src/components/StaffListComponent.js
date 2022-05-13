@@ -30,7 +30,7 @@ class StaffList extends Component {
 								Ngày sinh: {dateFormat(staff.doB, "dd/mm/yyyy")}
 							</CardText>
 							<CardText>
-								Ngày vào công ty:{" "}
+								Ngày vào công ty:
 								{dateFormat(staff.startDate, "dd/mm/yyyy")}
 							</CardText>
 							<CardText>
@@ -51,6 +51,7 @@ class StaffList extends Component {
 		}
 	}
 	render() {
+		// Tính số column cho bootstrap
 		const temp = `col-lg-${12 / this.props.columns} col-md-6 col-sm-12`;
 		const listStaff = this.props.staffs.map((staff) => {
 			return (
@@ -71,7 +72,11 @@ class StaffList extends Component {
 		return (
 			<div className="container-fluid text-left">
 				<div className="row">{listStaff}</div>
-				<p>Bấm vào tên nhân viên để xem thông tin</p>
+				<h4 className="text-center">
+					<mark>
+						<em>Bấm vào tên nhân viên để xem thông tin</em>
+					</mark>
+				</h4>
 				<div className="row">
 					<div className="col-12">
 						{this.renderStaff(this.state.selectedStaff)}

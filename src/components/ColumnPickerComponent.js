@@ -7,6 +7,7 @@ class ColumnPicker extends Component {
 			columns: [1, 2, 3, 4, 6],
 		};
 	}
+	// Trả column người dùng chọn cho App
 	setColumn = (column) => {
 		this.props.onRecieveColumn(column);
 	};
