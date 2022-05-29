@@ -13,11 +13,17 @@ class App extends Component {
 		this.state = {
 			staffs: STAFFS,
 			columns: 4,
+			selectedStaff: null,
 		}
 	}
+
 	onSetColumn = column => {
 		console.log(column)
 		this.setState({ columns: column })
+	}
+	selectStaff = id => {
+		console.log("id nè: ", this.state.selectedStaff)
+		this.setState({ selectedStaff: id })
 	}
 	render() {
 		const Staff = () => {
@@ -25,8 +31,12 @@ class App extends Component {
 				<StaffList
 					staffs={this.state.staffs}
 					columns={this.state.columns}
+					selectStaff={this.selectStaff}
 				/>
 			)
+		}
+		const StaffDetail = () => {
+			return <StaffDetail staff={}/>
 		}
 		return (
 			<BrowserRouter>
@@ -35,6 +45,7 @@ class App extends Component {
 					Homepage
 					<Switch>
 						<Route path='/staffs' component={Staff} />
+						<Route path='/staffs/:id' component={Staff} />
 						<Route path='/rooms' component={Staff} />
 						<Route path='/salary' component={Staff} />
 						<Redirect to='/' />
