@@ -20,31 +20,45 @@ class StaffList extends Component {
 		console.log(staff)
 		this.setState({ selectedStaff: staff })
 	}
+
 	renderStaff(staff) {
 		if (staff != null) {
 			return (
-				<div className='col-lg-6 col-sm-12'>
-					<Card>
-						<CardBody>
-							<CardTitle>Họ và tên: {staff.name}</CardTitle>
-							<CardText>
-								Ngày sinh: {dateFormat(staff.doB, "dd/mm/yyyy")}
-							</CardText>
-							<CardText>
-								Ngày vào công ty:
-								{dateFormat(staff.startDate, "dd/mm/yyyy")}
-							</CardText>
-							<CardText>
-								Phòng ban: {staff.department.name}
-							</CardText>
-							<CardText>
-								Số ngày nghỉ: {staff.annualLeave}
-							</CardText>
-							<CardText>
-								Số ngày đã làm thêm: {staff.overTime}
-							</CardText>
-						</CardBody>
-					</Card>
+				<div className='container'>
+					<div className='row'>
+						<div className='col-lg-3'>
+							<CardImg src={staff.image} />
+						</div>
+						<div className='col-lg-9 col-sm-12'>
+							<Card>
+								<CardBody>
+									<CardTitle>
+										Họ và tên: {staff.name}
+									</CardTitle>
+									<CardText>
+										Ngày sinh:{" "}
+										{dateFormat(staff.doB, "dd/mm/yyyy")}
+									</CardText>
+									<CardText>
+										Ngày vào công ty:
+										{dateFormat(
+											staff.startDate,
+											"dd/mm/yyyy"
+										)}
+									</CardText>
+									<CardText>
+										Phòng ban: {staff.department.name}
+									</CardText>
+									<CardText>
+										Số ngày nghỉ: {staff.annualLeave}
+									</CardText>
+									<CardText>
+										Số ngày đã làm thêm: {staff.overTime}
+									</CardText>
+								</CardBody>
+							</Card>
+						</div>
+					</div>
 				</div>
 			)
 		} else {
@@ -57,27 +71,27 @@ class StaffList extends Component {
 		const listStaff = this.props.staffs.map(staff => {
 			return (
 				<div className={temp} key={staff.id}>
-					{/* <ListGroup>
-							<ListGroupItem
-								className={
-									staff === this.state.selectedStaff
-										? " bg-secondary text-info font-weight-bold font-italic text-ali"
-										: ""
-								}
-								style={{ margin: 2 }}
-								onClick={() => {
-									this.onStaffSelected(staff)
-								}}
-							>
-								<img
-									style={{ display: "block" }}
-									src={`..${staff.image}`}
-									alt='alberto'
-								/>
+					<ListGroup>
+						<ListGroupItem
+							className={
+								staff === this.state.selectedStaff
+									? " bg-secondary text-info font-weight-bold font-italic text-ali"
+									: ""
+							}
+							style={{ margin: 2 }}
+							onClick={() => {
+								this.onStaffSelected(staff)
+							}}
+						>
+							<img
+								style={{ display: "block" }}
+								src={`..${staff.image}`}
+								alt='alberto'
+							/>
 
-								{staff.name}
-							</ListGroupItem>
-						</ListGroup> */}
+							{staff.name}
+						</ListGroupItem>
+					</ListGroup>
 					<Card
 						onClick={() => {
 							this.onStaffSelected(staff)
@@ -97,9 +111,9 @@ class StaffList extends Component {
 			<div className='container-fluid text-left'>
 				<div className='row'>{listStaff}</div>
 				<h4 className='text-center'>
-					<mark>
+					{/* <mark>
 						<em>Bấm vào tên nhân viên để xem thông tin</em>
-					</mark>
+					</mark> */}
 				</h4>
 				<div className='row'>
 					<div className='col-12'>

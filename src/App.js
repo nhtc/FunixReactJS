@@ -1,10 +1,12 @@
-import "./App.css"
-import { Navbar, NavbarBrand } from "reactstrap"
-import StaffList from "./components/StaffListComponent"
-import ColumnPicker from "./components/ColumnPickerComponent"
-import { STAFFS } from "./shared/staffs"
 import React, { Component } from "react"
-
+import { Redirect, Route, Switch, BrowserRouter } from "react-router-dom"
+import "./App.css"
+import Footer from "./components/FooterComponent"
+import Header from "./components/HeaderComponent"
+import Menu from "./components/MenuComponent"
+import Navigation from "./components/NavigationComponent"
+import StaffList from "./components/StaffListComponent"
+import { STAFFS } from "./shared/staffs"
 class App extends Component {
 	constructor(props) {
 		super(props)
@@ -18,24 +20,28 @@ class App extends Component {
 		this.setState({ columns: column })
 	}
 	render() {
-		return (
-			<div className='App'>
-				<Navbar dark color='primary'>
-					<div className='container'>
-						<NavbarBrand href='/'>
-							Ứng dụng quản lý nhân sự V1.0
-						</NavbarBrand>
-					</div>
-				</Navbar>
-				{/* <ColumnPicker
-					columns={this.state.columns}
-					onRecieveColumn={this.onSetColumn}
-				/> */}
+		const Staff = () => {
+			return (
 				<StaffList
 					staffs={this.state.staffs}
 					columns={this.state.columns}
 				/>
-			</div>
+			)
+		}
+		return (
+			<BrowserRouter>
+				<div className='App'>
+					<Header />
+					Homepage
+					<Switch>
+						<Route path='/staffs' component={Staff} />
+						<Route path='/rooms' component={Staff} />
+						<Route path='/salary' component={Staff} />
+						<Redirect to='/' />
+					</Switch>
+					{/* <Footer /> */}
+				</div>
+			</BrowserRouter>
 		)
 	}
 }

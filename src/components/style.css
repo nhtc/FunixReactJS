@@ -1,0 +1,40 @@
+.fa-google-plus-square {
+    color: red;
+}   
+.fa-facebook-square {
+    color: blue;
+}
+.fa-linkedin-square {
+    color: rgb(28, 28, 151);
+}
+.fa-twitter-square {
+    color: rgb(81, 122, 235);
+}
+.fa-youtube-square {
+    color: red;
+}
+.btn-social-icon i {
+    background: radial-gradient(closest-side,white,#17a2b8);
+}
+.btn-social-icon {
+    padding: 8px!important;
+}
+
+
+.info {
+    margin-left: 100px;
+}
+
+.nav-link .fa {
+    opacity: .6;
+    color: white;
+}
+.active span {
+    opacity: 1 !important;
+}
+.title {
+    margin-left: 30px;
+}
+.brand img {
+    margin-right: 20px ;
+}
