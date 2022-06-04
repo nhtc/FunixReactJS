@@ -3,26 +3,9 @@ import { Link } from "react-router-dom"
 import "./style.css"
 function Footer(props) {
 	return (
-		<div className='footer bg-info'>
+		<div className='footer bg-info sticky-bottom'>
 			<div className='container-fluid'>
 				<div className='row'>
-					{/* <div className='col-4 offset-1 col-sm-2'>
-						<h5>Links</h5>
-						<ul className='list-unstyled'>
-							<li>
-								<a to='/home'>Home</a>
-							</li>
-							<li>
-								<a to='/aboutus'>About Us</a>
-							</li>
-							<li>
-								<a to='/menu'>Menu</a>
-							</li>
-							<li>
-								<a to='/contactus'>Contact</a>
-							</li>
-						</ul>
-					</div> */}
 					<div className='col-5 col-sm-5 text-left info'>
 						<h5>Our Address</h5>
 						<address>

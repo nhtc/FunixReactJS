@@ -1,26 +1,27 @@
 import React, { Component } from "react"
-import { Redirect, Route, Switch, BrowserRouter } from "react-router-dom"
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom"
 import "./App.css"
+import Department from "./components/DepartmentComponent"
 import Footer from "./components/FooterComponent"
 import Header from "./components/HeaderComponent"
-import Menu from "./components/MenuComponent"
-import Navigation from "./components/NavigationComponent"
+import Salary from "./components/SalaryComponent"
+import StaffDetail from "./components/StaffDetailComponent"
 import StaffList from "./components/StaffListComponent"
-import { STAFFS } from "./shared/staffs"
+import { DEPARTMENTS, STAFFS } from "./shared/staffs"
 class App extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 			staffs: STAFFS,
+			departments: DEPARTMENTS,
 			columns: 4,
 			selectedStaff: null,
 		}
 	}
-
-	onSetColumn = column => {
-		console.log(column)
-		this.setState({ columns: column })
-	}
+	// onSetColumn = column => {
+	// 	console.log(column)
+	// 	this.setState({ columns: column })
+	// }
 	selectStaff = id => {
 		console.log("id nè: ", this.state.selectedStaff)
 		this.setState({ selectedStaff: id })
@@ -35,22 +36,35 @@ class App extends Component {
 				/>
 			)
 		}
-		const StaffDetail = () => {
-			return <StaffDetail staff={}/>
+		const Detail = ({ match }) => {
+			return (
+				<StaffDetail
+					staff={
+						this.state.staffs.filter(
+							staff => staff.id === parseInt(match.params.id, 10)
+						)[0]
+					}
+				/>
+			)
+		}
+		const DepartmentList = () => {
+			return <Department department={this.state.departments} />
+		}
+		const SalaryDetail = () => {
+			return <Salary staffs={this.state.staffs} />
 		}
 		return (
 			<BrowserRouter>
 				<div className='App'>
 					<Header />
-					Homepage
 					<Switch>
-						<Route path='/staffs' component={Staff} />
-						<Route path='/staffs/:id' component={Staff} />
-						<Route path='/rooms' component={Staff} />
-						<Route path='/salary' component={Staff} />
+						<Route path='/staffs' exact component={Staff} />
+						<Route path='/staffs/:id' component={Detail} />
+						<Route path='/departments' component={DepartmentList} />
+						<Route path='/salary' component={SalaryDetail} />
 						<Redirect to='/' />
 					</Switch>
-					{/* <Footer /> */}
+					<Footer />
 				</div>
 			</BrowserRouter>
 		)

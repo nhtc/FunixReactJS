@@ -51,7 +51,10 @@ class Header extends Component {
 									</NavLink>
 								</NavItem>
 								<NavItem>
-									<NavLink className='nav-link' to='/rooms'>
+									<NavLink
+										className='nav-link'
+										to='/departments'
+									>
 										<span className='fa fa-id-card-o fa-lg'>
 											{" "}
 											Phòng ban
