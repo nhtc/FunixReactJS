@@ -65,7 +65,7 @@ function RenderComments({ comments }) {
             );
           })}
         </ul>
-        <CommentForm />
+        <CommentForm dishId={dishId} addComment={addComment} />
       </div>
     );
   } else {
@@ -76,7 +76,12 @@ function RenderComments({ comments }) {
 class CommentForm extends Component {
   constructor(props) {
     super(props);
-
+    this.props.addComment(
+      this.props.dishId,
+      values.rating,
+      values.author,
+      values.comment
+    );
     this.state = {
       isCommentFormModalOpen: false,
     };
@@ -245,7 +250,11 @@ const DishDetail = (props) => {
             <RenderDish dish={props.dish} />
           </div>
           <div className="col-6 col-md-5 m-1">
-            <RenderComments comments={props.comments} />
+            <RenderComments
+              comments={props.comments}
+              addComment={props.addComment}
+              dishId={props.dish.id}
+            />
           </div>
         </div>
       </div>
