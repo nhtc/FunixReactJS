@@ -127,7 +127,7 @@ class Contact extends Component {
                     model=".lastname"
                     show="touched"
                     messages={{
-                      required: 'Required',
+                      required: 'Required ',
                       minLength: 'Must be greater than 2 characters',
                       maxLength: 'Must be 15 characters or less',
                     }}
