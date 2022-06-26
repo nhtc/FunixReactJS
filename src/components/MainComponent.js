@@ -9,6 +9,7 @@ import Footer from './FooterComponent';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { addComment } from '../redux/ActionCreators';
 
 const mapDispatchToProps = (dispatch) => ({
   addComment: (dishId, rating, author, comment) =>

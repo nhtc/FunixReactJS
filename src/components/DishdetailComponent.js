@@ -39,7 +39,7 @@ function RenderDish({ dish }) {
   );
 }
 
-function RenderComments({ comments }) {
+function RenderComments({ comments, addComment, dishId }) {
   const handleOnclick = () => {
     console.log('click');
     return <CommentForm />;
@@ -76,12 +76,6 @@ function RenderComments({ comments }) {
 class CommentForm extends Component {
   constructor(props) {
     super(props);
-    this.props.addComment(
-      this.props.dishId,
-      values.rating,
-      values.author,
-      values.comment
-    );
     this.state = {
       isCommentFormModalOpen: false,
     };
@@ -93,6 +87,12 @@ class CommentForm extends Component {
   handleCommentFormSubmit(values) {
     console.log('Current State is: ' + JSON.stringify(values));
     alert('Current State is: ' + JSON.stringify(values));
+    this.props.addComment(
+      this.props.dishId,
+      values.rating,
+      values.author,
+      values.comment
+    );
   }
 
   toggleCommentFormModal() {
