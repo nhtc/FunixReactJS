@@ -6,6 +6,8 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { ConfigureStore } from './redux/configureStore';
 
+//json-server --watch db.json -p 3001 -d 2000
+
 const store = ConfigureStore();
 class App extends Component {
   constructor(props) {
