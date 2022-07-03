@@ -1,10 +1,11 @@
-import React, { Component } from "react"
+import React, { Component, useEffect } from "react"
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom"
 import "./App.css"
 import Department from "./components/DepartmentComponent"
 import Footer from "./components/FooterComponent"
 import Header from "./components/HeaderComponent"
 import Salary from "./components/SalaryComponent"
+import Search from "./components/SearchComponent"
 import StaffDetail from "./components/StaffDetailComponent"
 import StaffList from "./components/StaffListComponent"
 import { DEPARTMENTS, STAFFS } from "./shared/staffs"
@@ -13,6 +14,7 @@ class App extends Component {
 		super(props)
 		this.state = {
 			staffs: STAFFS,
+			staffSearch: null,
 			departments: DEPARTMENTS,
 			columns: 4,
 			selectedStaff: null,
@@ -22,10 +24,20 @@ class App extends Component {
 	// 	console.log(column)
 	// 	this.setState({ columns: column })
 	// }
-	selectStaff = id => {
-		console.log("id nè: ", this.state.selectedStaff)
-		this.setState({ selectedStaff: id })
-	}
+	// selectStaff = id => {
+	// 	console.log("id nè: ", this.state.selectedStaff)
+	// 	this.setState({ selectedStaff: id })
+	// }
+
+	// componentDidMount() {
+	// 	console.log(this.state.staffSearch)
+	// }
+
+	// getStaffSearch = value => {
+	// 	this.setState({
+	// 		staffSearch: value,
+	// 	})
+	// }
 	render() {
 		const Staff = () => {
 			return (
@@ -58,6 +70,7 @@ class App extends Component {
 				<div className='App'>
 					<Header />
 					<Switch>
+						<Route path='/' exact component={Staff} />
 						<Route path='/staffs' exact component={Staff} />
 						<Route path='/staffs/:id' component={Detail} />
 						<Route path='/departments' component={DepartmentList} />

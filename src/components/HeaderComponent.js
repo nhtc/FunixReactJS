@@ -10,6 +10,7 @@ import {
 } from "reactstrap"
 import { NavLink } from "react-router-dom"
 import "./style.css"
+import Search from "./SearchComponent"
 class Header extends Component {
 	constructor(props) {
 		super(props)
