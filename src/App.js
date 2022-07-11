@@ -4,6 +4,8 @@ import "./App.css"
 import Department from "./components/DepartmentComponent"
 import Footer from "./components/FooterComponent"
 import Header from "./components/HeaderComponent"
+import Home from "./components/HomeComponent"
+import Navigation from "./components/NavigationComponent"
 import Salary from "./components/SalaryComponent"
 import Search from "./components/SearchComponent"
 import StaffDetail from "./components/StaffDetailComponent"
@@ -70,7 +72,7 @@ class App extends Component {
 				<div className='App'>
 					<Header />
 					<Switch>
-						<Route path='/' exact component={Staff} />
+						<Route path='/' exact component={Home} />
 						<Route path='/staffs' exact component={Staff} />
 						<Route path='/staffs/:id' component={Detail} />
 						<Route path='/departments' component={DepartmentList} />

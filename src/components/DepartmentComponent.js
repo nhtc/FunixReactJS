@@ -14,6 +14,14 @@ const Department = props => {
 	return (
 		<div className='container'>
 			<div className='row'>
+				<Breadcrumb>
+					<BreadcrumbItem>
+						<Link to='/staffs'>Nhân viên</Link>
+					</BreadcrumbItem>
+					<BreadcrumbItem active>Phòng ban</BreadcrumbItem>
+				</Breadcrumb>
+			</div>
+			<div className='row'>
 				{props.department.map(depart => {
 					return (
 						<div
