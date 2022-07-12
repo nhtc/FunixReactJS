@@ -43,12 +43,16 @@ class StaffList extends Component {
 
 		return (
 			<div className='container-fluid text-left'>
-				<div className='row'>
-					<Search
-						staff={this.props.staffs}
-						staffList={this.SearchStaff}
-					/>
-					<CreateStaff />
+				<div className='row '>
+					<div className='col-lg-9 col-md-12 col-sm-12'>
+						<Search
+							staff={this.props.staffs}
+							staffList={this.SearchStaff}
+						/>
+					</div>
+					<div className='col-lg-3 col-md-12 col-sm-12 mt-4'>
+						<CreateStaff />
+					</div>
 				</div>
 				<div className='row'>{listStaff}</div>
 			</div>

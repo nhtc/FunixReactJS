@@ -38,3 +38,125 @@
 .brand img {
     margin-right: 20px ;
 }
+body {
+    font-family: Arial, Helvetica, sans-serif;
+
+    background-color: black;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* Add padding to containers */
+.container {
+    padding: 16px;
+
+    background-color: white;
+}
+
+/* Full-width input fields */
+input[type=text],
+input[type=date] {
+    display: inline-block;
+
+    width: 100%;
+    padding: 15px;
+
+    border: none;
+    background: #f1f1f1;
+}
+
+input[type=text]:focus,
+input[type=password]:focus {
+    outline: none;
+    background-color: #ddd;
+}
+
+/* Overwrite default styles of hr */
+hr {
+    margin-bottom: 25px;
+
+    border: 1px solid #f1f1f1;
+}
+
+/* Set a style for the submit button */
+.registerbtn {
+    width: 100%;
+    margin: 8px 0;
+    padding: 16px 20px;
+
+    cursor: pointer;
+
+    opacity: .9;
+    color: white;
+    border: none;
+    background-color: #04aa6d;
+}
+
+.registerbtn:hover {
+    opacity: 1;
+}
+
+/* Add a blue text color to links */
+a {
+    color: dodgerblue;
+}
+
+/* Set a grey background color and center the text of the "sign in" section */
+.signin {
+    text-align: center;
+
+    background-color: #f1f1f1;
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:weight@100;200;300;400;500;600;700;800&display=swap");
+
+
+body {
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+
+    background-color: #eee;
+}
+
+/* .height {
+    height: 100vh;
+} */
+
+
+.search {
+    position: relative;
+
+    box-shadow: 0 0 40px rgba(51, 51, 51, .1);
+}
+
+.search input {
+    height: 60px;
+
+    text-indent: 25px;
+
+    border: 2px solid #d6d4d4;
+}
+
+
+.search input:focus {
+    border: 2px solid blue;
+    box-shadow: none;
+}
+
+.search .fa-search {
+    position: absolute;
+    top: 20px;
+    left: 16px;
+}
+
+.search button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+
+    width: 110px;
+    height: 50px;
+
+    background: blue;
+}

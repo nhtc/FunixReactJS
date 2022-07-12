@@ -38,7 +38,7 @@ const Navigation = () => {
 							<NavItem className>
 								<NavLink href='https://github.com/reactstrap/reactstrap'>
 									<i
-										className='fa fa-id-card-o fa-2x'
+										className='fa fa-id-card-0 fa-2x'
 										aria-hidden='true'
 									></i>
 									<span className='align-text-bottom'>

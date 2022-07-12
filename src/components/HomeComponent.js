@@ -6,6 +6,7 @@ export default function Home() {
 			<img
 				src='https://dienanhtrongtamtay.com/wp-content/uploads/2020/06/Staff-la-gi.jpg'
 				alt='staffImage'
+				className='home_img'
 			/>
 		</div>
 	)
