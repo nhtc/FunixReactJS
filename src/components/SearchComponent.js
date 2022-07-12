@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react"
-import useDebounce from "./Debounce"
+import React from "react"
 
 const Search = ({ staff, staffList }) => {
 	const handleSubmit = e => {
