@@ -31,16 +31,26 @@ class CreateStaffForm extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+			// departments: DEPARTMENTS,
+			// isCommentFormModalOpen: false,
+			// name: "Minh",
+			// doB: "1999-06-19",
+			// salaryScale: "1",
+			// department: "HR",
+			// annualLeave: "0",
+			// overTime: "0",
+			// startDate: "2021-07-20",
+			// image: "/assets/images/alberto.png",
 			departments: DEPARTMENTS,
 			isCommentFormModalOpen: false,
-			name: "Minh",
-			doB: "1999-06-19",
-			salaryScale: "1",
-			department: "HR",
-			annualLeave: "0",
-			overTime: "0",
-			startDate: "2021-07-20",
-			image: "/assets/images/alberto.png",
+			name: "",
+			doB: "",
+			salaryScale: "",
+			department: "",
+			annualLeave: "",
+			overTime: "",
+			startDate: "",
+			image: "/assets/images/steve.jpg",
 			// image: "http://static.ybox.vn/2017/12/23/a64bbe0c-e7a9-11e7-b05b-56c566ee3692.jpg",
 			touched: {
 				name: false,
@@ -52,6 +62,7 @@ class CreateStaffForm extends Component {
 			},
 		}
 
+		this.handleOnChange = this.handleOnChange.bind(this)
 		this.toggleCommentFormModal = this.toggleCommentFormModal.bind(this)
 		this.handleCommentFormSubmit = this.handleCommentFormSubmit.bind(this)
 		this.handleBlur = this.handleBlur.bind(this)
@@ -99,16 +110,34 @@ class CreateStaffForm extends Component {
 		return errors
 	}
 
-	handleOnChange = event => {
+	handleOnChange = field => event => {
 		const target = event.target
+
 		const value = target.type === "checkbox" ? target.checked : target.value
 		const name = target.name
-		console.log("105", name, value)
-
-		console.log("106", this.state)
-		this.setState({
-			[name]: value,
-		})
+		console.log("1 target: ", target.type)
+		console.log("2 field : ", field)
+		console.log("3 name : ", name)
+		console.log("4 valuie", value)
+		if (field !== "undefined") {
+			if (field === "department")
+				this.setState({
+					[name]: this.state.departments.filter(
+						d => d.name === value
+					)[0],
+					touched: { ...this.state.touched, [field]: true },
+				})
+			else {
+				this.setState({
+					[name]: value,
+					touched: { ...this.state.touched, [field]: true },
+				})
+			}
+		} else {
+			this.setState({
+				[name]: value,
+			})
+		}
 	}
 
 	handleCommentFormSubmit(values) {
@@ -176,9 +205,8 @@ class CreateStaffForm extends Component {
 									value={this.state.name}
 									valid={errors.name === ""}
 									invalid={errors.name !== ""}
-									onBlur={this.handleBlur("name")}
-									onChange={this.handleOnChange}
-									required
+									//onBlur=={this.handleBlur("name")}
+									onChange={this.handleOnChange("name")}
 								/>
 								<FormFeedback>{errors.name}</FormFeedback>
 								<label htmlFor='doB'>
@@ -192,9 +220,8 @@ class CreateStaffForm extends Component {
 									value={this.state.doB}
 									valid={errors.doB === ""}
 									invalid={errors.doB !== ""}
-									onBlur={this.handleBlur("doB")}
+									//onBlur=={this.handleBlur("doB")}
 									onChange={this.handleOnChange}
-									required
 								/>
 								<FormFeedback>{errors.doB}</FormFeedback>
 								<label htmlFor='salaryScale'>
@@ -208,8 +235,10 @@ class CreateStaffForm extends Component {
 									value={this.state.salaryScale}
 									valid={errors.salaryScale === ""}
 									invalid={errors.salaryScale !== ""}
-									onBlur={this.handleBlur("salaryScale")}
-									onChange={this.handleOnChange}
+									//onBlur=={this.handleBlur("salaryScale")}
+									onChange={this.handleOnChange(
+										"salaryScale"
+									)}
 								/>
 								<FormFeedback>
 									{errors.salaryScale}
@@ -225,9 +254,8 @@ class CreateStaffForm extends Component {
 									value={this.state.startDate}
 									valid={errors.startDate === ""}
 									invalid={errors.startDate !== ""}
-									onBlur={this.handleBlur("startDate")}
-									onChange={this.handleOnChange}
-									required
+									//onBlur=={this.handleBlur("startDate")}
+									onChange={this.handleOnChange("startDate")}
 								/>{" "}
 								<FormFeedback>{errors.startDate}</FormFeedback>
 								<label htmlFor='department'>
@@ -238,8 +266,8 @@ class CreateStaffForm extends Component {
 									name='department'
 									id='department'
 									value={this.state.department}
-									onBlur={this.handleBlur("department")}
-									onChange={this.handleOnChange}
+									//onBlur=={this.handleBlur("department")}
+									onChange={this.handleOnChange("department")}
 								>
 									{this.state.departments.map((value, id) => (
 										<option key={id}>{value.name}</option>
@@ -256,9 +284,10 @@ class CreateStaffForm extends Component {
 									value={this.state.annualLeave}
 									valid={errors.annualLeave === ""}
 									invalid={errors.annualLeave !== ""}
-									onBlur={this.handleBlur("annualLeave")}
-									onChange={this.handleOnChange}
-									required
+									//onBlur=={this.handleBlur("annualLeave")}
+									onChange={this.handleOnChange(
+										"annualLeave"
+									)}
 								/>{" "}
 								<FormFeedback>
 									{errors.annualLeave}
@@ -274,9 +303,8 @@ class CreateStaffForm extends Component {
 									value={this.state.overTime}
 									valid={errors.overTime === ""}
 									invalid={errors.overTime !== ""}
-									onBlur={this.handleBlur("overTime")}
-									onChange={this.handleOnChange}
-									required
+									//onBlur=={this.handleBlur("overTime")}
+									onChange={this.handleOnChange("overTime")}
 								/>{" "}
 								<FormFeedback>{errors.overTime}</FormFeedback>
 								<button type='submit' className='registerbtn'>

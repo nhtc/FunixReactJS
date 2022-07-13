@@ -40,6 +40,11 @@ class App extends Component {
 	// 		staffSearch: value,
 	// 	})
 	// }
+	newStaff = newStaff => {
+		this.setState({
+			staffs: { ...this.state.staffs, newStaff },
+		})
+	}
 	render() {
 		const Staff = () => {
 			return (
@@ -48,6 +53,7 @@ class App extends Component {
 					departments={this.state.departments}
 					columns={this.state.columns}
 					selectStaff={this.selectStaff}
+					newStaff={this.newStaff}
 				/>
 			)
 		}
