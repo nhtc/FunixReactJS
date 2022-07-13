@@ -45,6 +45,7 @@ class App extends Component {
 			return (
 				<StaffList
 					staffs={this.state.staffs}
+					departments={this.state.departments}
 					columns={this.state.columns}
 					selectStaff={this.selectStaff}
 				/>

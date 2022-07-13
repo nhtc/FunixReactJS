@@ -10,7 +10,6 @@ import {
 	BreadcrumbItem,
 } from "reactstrap"
 const Department = props => {
-	console.log(props.department)
 	return (
 		<div className='container'>
 			<div className='row'>

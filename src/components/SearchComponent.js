@@ -38,19 +38,19 @@ const Search = ({ staff, staffList }) => {
 		// 		className='btn btn-outline-primary search-btn'
 		// 	/>
 		// </form>
-		<div class='container'>
-			<div class='row height d-flex justify-content-center align-items-center'>
-				<div class='col-md-8'>
-					<div class='search'>
+		<div className='container'>
+			<div className='row height d-flex justify-content-center align-items-center'>
+				<div className='col-md-8'>
+					<div className='search'>
 						<form onSubmit={handleSubmit}>
-							<i class='fa fa-search'></i>
+							<i className='fa fa-search'></i>
 							<input
 								type='text'
 								name='search'
-								class='form-control'
+								className='form-control'
 								placeholder='Search staff...?'
 							/>
-							<button class='btn btn-primary' type='submit'>
+							<button className='btn btn-primary' type='submit'>
 								Search
 							</button>
 						</form>

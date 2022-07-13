@@ -9,18 +9,24 @@ class StaffList extends Component {
 		super(props)
 		this.state = {
 			searchStaff: null,
+			newStaffAdded: null,
 		}
+		console.log(this.props.staffs)
 	}
 	SearchStaff = staffSearch => {
 		this.setState({
 			searchStaff: staffSearch,
 		})
 	}
-
+	newStaff = staff => {
+		console.log(staff)
+		this.setState({ newStaffAdded: staff })
+	}
 	render() {
 		const temp = `col-lg-2 col-md-4 col-6`
 		const staffList = this.state.searchStaff || this.props.staffs
-
+		this.state.newStaffAdded && staffList.push(this.state.newStaffAdded)
+		console.log("29", staffList)
 		const listStaff = staffList.map(staff => {
 			return (
 				<div className={temp} key={staff.id}>
@@ -51,7 +57,7 @@ class StaffList extends Component {
 						/>
 					</div>
 					<div className='col-lg-3 col-md-12 col-sm-12 mt-4'>
-						<CreateStaff />
+						<CreateStaff newStaff={this.newStaff} />
 					</div>
 				</div>
 				<div className='row'>{listStaff}</div>

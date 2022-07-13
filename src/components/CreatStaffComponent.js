@@ -19,6 +19,8 @@ import {
 	Input,
 	FormFeedback,
 } from "reactstrap"
+import { DEPARTMENTS } from "../shared/staffs"
+import { v4 as uuidv4 } from "uuid"
 
 const required = val => val && val.length
 const maxLength = len => val => !val || val.length <= len
@@ -29,22 +31,30 @@ class CreateStaffForm extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+			departments: DEPARTMENTS,
 			isCommentFormModalOpen: false,
-			name: "",
-			doB: "",
-			salaryScale: "",
-			department: "",
+			name: "Minh",
+			doB: "1999-06-19",
+			salaryScale: "1",
+			department: "HR",
 			annualLeave: "0",
 			overTime: "0",
-			startDate: "",
-			image: "/assets/images/steve.jpg",
+			startDate: "2021-07-20",
+			image: "/assets/images/alberto.png",
+			// image: "http://static.ybox.vn/2017/12/23/a64bbe0c-e7a9-11e7-b05b-56c566ee3692.jpg",
 			touched: {
 				name: false,
+				doB: false,
+				salaryScale: false,
+				startDate: false,
+				annualLeave: false,
+				overTime: false,
 			},
 		}
 
 		this.toggleCommentFormModal = this.toggleCommentFormModal.bind(this)
 		this.handleCommentFormSubmit = this.handleCommentFormSubmit.bind(this)
+		this.handleBlur = this.handleBlur.bind(this)
 	}
 
 	handleBlur = field => evt => {
@@ -52,23 +62,14 @@ class CreateStaffForm extends Component {
 			touched: { ...this.state.touched, [field]: true },
 		})
 	}
-	validate(
-		name,
-		doB,
-		salaryScale,
-		department,
-		annualLeave,
-		overTime,
-		startDate
-	) {
+	validate(name, doB, salaryScale, annualLeave, overTime, startDate) {
 		const errors = {
 			name: "",
 			doB: "",
 			salaryScale: "",
-			department: "",
+			startDate: "",
 			annualLeave: "",
 			overTime: "",
-			startDate: "",
 		}
 		if (this.state.touched.name && !required(name))
 			errors.name = "Please fill this case"
@@ -83,8 +84,8 @@ class CreateStaffForm extends Component {
 		if (this.state.touched.startDate && !required(startDate))
 			errors.startDate = "Please choose date"
 
-		if (this.state.touched.department && !required(department))
-			errors.department = "Please choose department"
+		// if (this.state.touched.department && !required(department))
+		// 	errors.department = "Please choose department"
 
 		if (this.state.touched.salaryScale && !required(salaryScale))
 			errors.salaryScale = "Please fill this case"
@@ -102,7 +103,9 @@ class CreateStaffForm extends Component {
 		const target = event.target
 		const value = target.type === "checkbox" ? target.checked : target.value
 		const name = target.name
+		console.log("105", name, value)
 
+		console.log("106", this.state)
 		this.setState({
 			[name]: value,
 		})
@@ -119,18 +122,24 @@ class CreateStaffForm extends Component {
 		})
 	}
 	handleSubmit = e => {
-		console.log(e)
+		e.preventDefault()
+		console.log(this.state)
+		this.props.newStaff({
+			id: uuidv4(),
+			...this.state,
+		})
+
+		this.toggleCommentFormModal()
 	}
 
 	render() {
 		const errors = this.validate(
 			this.state.name,
 			this.state.doB,
-			this.state.annualLeave,
-			this.state.department,
-			this.state.overTime,
 			this.state.salaryScale,
-			this.state.startDate
+			this.state.startDate,
+			this.state.annualLeave,
+			this.state.overTime
 		)
 		return (
 			<React.Fragment>
@@ -149,14 +158,14 @@ class CreateStaffForm extends Component {
 					</ModalHeader>
 					<ModalBody>
 						<form onSubmit={this.handleSubmit}>
-							<div class='container'>
+							<div className='container'>
 								<h1>Create New Staff</h1>
 								<p>
 									Please fill in this form to create a new
 									staff.
 								</p>
 								<hr />
-								<label for='name'>
+								<label htmlFor='name'>
 									<b>Tên</b>
 								</label>
 								<Input
@@ -172,7 +181,7 @@ class CreateStaffForm extends Component {
 									required
 								/>
 								<FormFeedback>{errors.name}</FormFeedback>
-								<label for='doB'>
+								<label htmlFor='doB'>
 									<b>Ngày sinh</b>
 								</label>
 								<Input
@@ -188,7 +197,7 @@ class CreateStaffForm extends Component {
 									required
 								/>
 								<FormFeedback>{errors.doB}</FormFeedback>
-								<label for='salaryScale'>
+								<label htmlFor='salaryScale'>
 									<b>Hệ số lương</b>
 								</label>
 								<Input
@@ -201,12 +210,11 @@ class CreateStaffForm extends Component {
 									invalid={errors.salaryScale !== ""}
 									onBlur={this.handleBlur("salaryScale")}
 									onChange={this.handleOnChange}
-									required
 								/>
 								<FormFeedback>
 									{errors.salaryScale}
 								</FormFeedback>
-								<label for='startDate'>
+								<label htmlFor='startDate'>
 									<b>Ngày vào công ty</b>
 								</label>
 								<Input
@@ -222,23 +230,22 @@ class CreateStaffForm extends Component {
 									required
 								/>{" "}
 								<FormFeedback>{errors.startDate}</FormFeedback>
-								<label for='department'>
+								<label htmlFor='department'>
 									<b>Phòng ban</b>
 								</label>
 								<Input
-									type='text'
-									placeholder='Nhập phòng ban'
+									type='select'
 									name='department'
 									id='department'
 									value={this.state.department}
-									valid={errors.department === ""}
-									invalid={errors.department !== ""}
 									onBlur={this.handleBlur("department")}
 									onChange={this.handleOnChange}
-									required
-								/>{" "}
-								<FormFeedback>{errors.department}</FormFeedback>
-								<label for='annualLeave'>
+								>
+									{this.state.departments.map((value, id) => (
+										<option key={id}>{value.name}</option>
+									))}
+								</Input>
+								<label htmlFor='annualLeave'>
 									<b>Số ngày nghỉ còn lại</b>
 								</label>
 								<Input
@@ -256,7 +263,7 @@ class CreateStaffForm extends Component {
 								<FormFeedback>
 									{errors.annualLeave}
 								</FormFeedback>
-								<label for='overTime'>
+								<label htmlFor='overTime'>
 									<b>Số ngày đã làm thêm</b>
 								</label>
 								<Input
@@ -272,7 +279,7 @@ class CreateStaffForm extends Component {
 									required
 								/>{" "}
 								<FormFeedback>{errors.overTime}</FormFeedback>
-								<button type='submit' class='registerbtn'>
+								<button type='submit' className='registerbtn'>
 									Thêm nhân viên
 								</button>
 							</div>
@@ -283,12 +290,5 @@ class CreateStaffForm extends Component {
 		)
 	}
 }
-function CreateStaff() {
-	return (
-		<div>
-			<CreateStaffForm />
-		</div>
-	)
-}
 
-export default CreateStaff
+export default CreateStaffForm
