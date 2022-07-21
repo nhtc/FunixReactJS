@@ -1,5 +1,5 @@
-import React from "react"
-import { Link } from "react-router-dom"
+import React from 'react';
+import { Link } from 'react-router-dom';
 import {
 	Card,
 	CardBody,
@@ -8,42 +8,41 @@ import {
 	CardText,
 	Breadcrumb,
 	BreadcrumbItem,
-} from "reactstrap"
-const Department = props => {
+} from 'reactstrap';
+
+const Department = (props) => {
 	return (
-		<div className='container'>
-			<div className='row'>
+		<div className="container">
+			<div className="row">
 				<Breadcrumb>
 					<BreadcrumbItem>
-						<Link to='/staffs'>Nhân viên</Link>
+						<Link to="/staffs">Nhân viên</Link>
 					</BreadcrumbItem>
 					<BreadcrumbItem active>Phòng ban</BreadcrumbItem>
 				</Breadcrumb>
 			</div>
-			<div className='row'>
-				{props.department.map(depart => {
+			<div className="row">
+				{props.department.map((depart) => {
 					return (
 						<div
-							className='col-lg-4 text-left justify-content-center'
+							className="col-lg-4 text-left justify-content-center"
 							style={{
-								marginBottom: "20px",
+								marginBottom: '20px',
 							}}
 						>
-							<Card style={{ border: "1px solid" }}>
+							<Card style={{ border: '1px solid' }}>
 								<CardBody>
 									<CardTitle>{depart.name}</CardTitle>
 
-									<CardText>
-										Số nhân viên: {depart.numberOfStaff}
-									</CardText>
+									<CardText>Số nhân viên: {depart.numberOfStaff}</CardText>
 								</CardBody>
 							</Card>
 						</div>
-					)
+					);
 				})}
 			</div>
 		</div>
-	)
-}
+	);
+};
 
-export default Department
+export default Department;

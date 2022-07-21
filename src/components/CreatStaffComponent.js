@@ -1,322 +1,305 @@
-import React, { Component, useEffect } from "react"
-import { Control, Errors, LocalForm } from "react-redux-form"
-import { Link } from "react-router-dom"
+import React, { Component } from 'react';
 import {
-	Breadcrumb,
-	BreadcrumbItem,
 	Button,
-	Card,
-	CardBody,
-	CardImg,
-	CardText,
-	CardTitle,
 	Col,
+	Form,
+	FormFeedback,
+	FormGroup,
+	Input,
 	Label,
 	Modal,
 	ModalBody,
 	ModalHeader,
-	Row,
-	Input,
-	FormFeedback,
-} from "reactstrap"
-import { DEPARTMENTS } from "../shared/staffs"
-import { v4 as uuidv4 } from "uuid"
-
-const required = val => val && val.length
-const maxLength = len => val => !val || val.length <= len
-const minLength = len => val => val && val.length >= len
-const isNumber = val => !isNaN(Number(val))
-const validEmail = val => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val)
-class CreateStaffForm extends Component {
+} from 'reactstrap';
+import { DEPARTMENTS } from '../shared/staffs';
+import { v4 as uuid } from 'uuid';
+class CreateStaff extends Component {
 	constructor(props) {
-		super(props)
+		super(props);
+
 		this.state = {
-			// departments: DEPARTMENTS,
-			// isCommentFormModalOpen: false,
-			// name: "Minh",
-			// doB: "1999-06-19",
-			// salaryScale: "1",
-			// department: "HR",
-			// annualLeave: "0",
-			// overTime: "0",
-			// startDate: "2021-07-20",
-			// image: "/assets/images/alberto.png",
 			departments: DEPARTMENTS,
-			isCommentFormModalOpen: false,
-			name: "",
-			doB: "",
-			salaryScale: "",
-			department: "",
-			annualLeave: "",
-			overTime: "",
-			startDate: "",
-			image: "/assets/images/steve.jpg",
-			// image: "http://static.ybox.vn/2017/12/23/a64bbe0c-e7a9-11e7-b05b-56c566ee3692.jpg",
+			isFormModalOpen: false,
+			name: 'cuong',
+			doB: '21-11-1999',
+			salaryScale: '1',
+			startDate: '30-5-2022',
+			department: 'HR',
+			annualLeave: '1',
+			overTime: '1',
+			image: '/assets/images/vadonut.png',
 			touched: {
 				name: false,
 				doB: false,
 				salaryScale: false,
 				startDate: false,
+				department: false,
 				annualLeave: false,
 				overTime: false,
 			},
-		}
+		};
 
-		this.handleOnChange = this.handleOnChange.bind(this)
-		this.toggleCommentFormModal = this.toggleCommentFormModal.bind(this)
-		this.handleCommentFormSubmit = this.handleCommentFormSubmit.bind(this)
-		this.handleBlur = this.handleBlur.bind(this)
+		this.handleInputChange = this.handleInputChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleBlur = this.handleBlur.bind(this);
 	}
 
-	handleBlur = field => evt => {
+	handleBlur = (field) => (evt) => {
 		this.setState({
 			touched: { ...this.state.touched, [field]: true },
-		})
-	}
-	validate(name, doB, salaryScale, annualLeave, overTime, startDate) {
+		});
+	};
+
+	validate(
+		name,
+		doB,
+		salaryScale,
+		startDate,
+		department,
+		annualLeave,
+		overTime
+	) {
 		const errors = {
-			name: "",
-			doB: "",
-			salaryScale: "",
-			startDate: "",
-			annualLeave: "",
-			overTime: "",
-		}
-		if (this.state.touched.name && !required(name))
-			errors.name = "Please fill this case"
-		else if (this.state.touched.name && name.length < 3)
-			errors.name = "Name should be >= 3 characters"
-		else if (this.state.touched.name && name.length > 30)
-			errors.name = " Name should be <= 10 characters"
+			name: '',
+			doB: '',
+			salaryScale: '',
+			startDate: '',
+			department: '',
+			annualLeave: '',
+			overTime: '',
+		};
 
-		if (this.state.touched.doB && !required(doB))
-			errors.doB = "Please choose date"
+		if (this.state.touched.name && name.length < 3)
+			errors.name = 'Name should be >= 3 characters';
+		else if (this.state.touched.name && name.length > 10)
+			errors.name = ' Name should be <= 10 characters';
 
-		if (this.state.touched.startDate && !required(startDate))
-			errors.startDate = "Please choose date"
+		if (this.state.touched.doB && doB.length < 1)
+			errors.doB = 'Please fill this case';
 
-		// if (this.state.touched.department && !required(department))
-		// 	errors.department = "Please choose department"
+		const reg = /^\d+$/;
+		if (this.state.touched.salaryScale && salaryScale.length === 0)
+			errors.salaryScale = 'Please fill this case';
+		else if (this.state.touched.salaryScale && !reg.test(salaryScale))
+			errors.salaryScale = 'Salary Scale should contain only numbers';
+		if (this.state.touched.startDate && startDate.length < 1)
+			errors.startDate = 'Please fill this case';
+		// if (this.state.touched.department && department.name.includes('Select'))
+		// 	errors.department = 'Please fill this case';
+		if (this.state.touched.annualLeave && annualLeave.length < 1)
+			errors.annualLeave = 'Please fill this case';
+		if (this.state.touched.overTime && overTime.length < 1)
+			errors.overTime = 'Please fill this case';
 
-		if (this.state.touched.salaryScale && !required(salaryScale))
-			errors.salaryScale = "Please fill this case"
-
-		if (this.state.touched.annualLeave && !required(annualLeave))
-			errors.annualLeave = "Please fill this case"
-
-		if (this.state.touched.overTime && !required(overTime))
-			errors.overTime = "Please fill this case"
-
-		return errors
+		return errors;
 	}
 
-	handleOnChange = field => event => {
-		const target = event.target
-
-		const value = target.type === "checkbox" ? target.checked : target.value
-		const name = target.name
-		console.log("1 target: ", target.type)
-		console.log("2 field : ", field)
-		console.log("3 name : ", name)
-		console.log("4 valuie", value)
-		if (field !== "undefined") {
-			if (field === "department")
-				this.setState({
-					[name]: this.state.departments.filter(
-						d => d.name === value
-					)[0],
-					touched: { ...this.state.touched, [field]: true },
-				})
-			else {
-				this.setState({
-					[name]: value,
-					touched: { ...this.state.touched, [field]: true },
-				})
-			}
-		} else {
+	handleInputChange(event) {
+		const target = event.target;
+		const value = target.type === 'checkbox' ? target.checked : target.value;
+		const name = target.name;
+		if (name === 'department') {
+			this.setState({
+				[name]: this.state.departments.filter(
+					(d, index) => d.name === value
+				)[0],
+			});
+		} else
 			this.setState({
 				[name]: value,
-			})
-		}
+			});
 	}
-
-	handleCommentFormSubmit(values) {
-		console.log("Current State is: " + JSON.stringify(values))
-		alert("Current State is: " + JSON.stringify(values))
-	}
-
-	toggleCommentFormModal() {
+	toggleFormModal = () => {
 		this.setState({
-			isCommentFormModalOpen: !this.state.isCommentFormModalOpen,
-		})
-	}
-	handleSubmit = e => {
-		e.preventDefault()
-		console.log(this.state)
+			isFormModalOpen: !this.state.isFormModalOpen,
+		});
+	};
+	handleSubmit(event) {
+		console.log('Current State is: ' + JSON.stringify(this.state));
 		this.props.newStaff({
-			id: uuidv4(),
-			...this.state,
-		})
-
-		this.toggleCommentFormModal()
+			id: uuid(),
+			name: this.state.name,
+			doB: this.state.doB,
+			salaryScale: this.state.salaryScale,
+			startDate: this.state.startDate,
+			department: this.state.department,
+			annualLeave: this.state.annualLeave,
+			overTime: this.state.overTime,
+			image: this.state.image,
+		});
+		this.toggleFormModal();
+		event.preventDefault();
 	}
-
 	render() {
 		const errors = this.validate(
 			this.state.name,
 			this.state.doB,
 			this.state.salaryScale,
 			this.state.startDate,
+			this.state.department,
 			this.state.annualLeave,
 			this.state.overTime
-		)
+		);
 		return (
-			<React.Fragment>
-				<Button outline onClick={this.toggleCommentFormModal}>
-					<span className='fa fa-plus fa-lg'> Add New Staff</span>
+			<div>
+				<Button outline onClick={this.toggleFormModal}>
+					<span className="fa fa-plus fa-lg"> Add New Staff</span>
 				</Button>
 
-				{/* commentform  Modal */}
 				<Modal
-					isOpen={this.state.isCommentFormModalOpen}
-					toggle={this.toggleCommentFormModal}
+					isOpen={this.state.isFormModalOpen}
+					toggle={this.toggleFormModal}
+					size="lg"
 				>
-					<ModalHeader toggle={this.toggleCommentFormModal}>
-						{" "}
-						Add Staff{" "}
-					</ModalHeader>
+					<ModalHeader toggle={this.toggleFormModal}> Add Staff </ModalHeader>
 					<ModalBody>
-						<form onSubmit={this.handleSubmit}>
-							<div className='container'>
-								<h1>Create New Staff</h1>
-								<p>
-									Please fill in this form to create a new
-									staff.
-								</p>
-								<hr />
-								<label htmlFor='name'>
-									<b>Tên</b>
-								</label>
-								<Input
-									type='text'
-									placeholder='Nhập Tên'
-									name='name'
-									id='name'
-									value={this.state.name}
-									valid={errors.name === ""}
-									invalid={errors.name !== ""}
-									//onBlur=={this.handleBlur("name")}
-									onChange={this.handleOnChange("name")}
-								/>
-								<FormFeedback>{errors.name}</FormFeedback>
-								<label htmlFor='doB'>
-									<b>Ngày sinh</b>
-								</label>
-								<Input
-									type='date'
-									placeholder=''
-									name='doB'
-									id='doB'
-									value={this.state.doB}
-									valid={errors.doB === ""}
-									invalid={errors.doB !== ""}
-									//onBlur=={this.handleBlur("doB")}
-									onChange={this.handleOnChange}
-								/>
-								<FormFeedback>{errors.doB}</FormFeedback>
-								<label htmlFor='salaryScale'>
-									<b>Hệ số lương</b>
-								</label>
-								<Input
-									type='text'
-									placeholder='Nhập hệ số lương'
-									name='salaryScale'
-									id='salaryScale'
-									value={this.state.salaryScale}
-									valid={errors.salaryScale === ""}
-									invalid={errors.salaryScale !== ""}
-									//onBlur=={this.handleBlur("salaryScale")}
-									onChange={this.handleOnChange(
-										"salaryScale"
-									)}
-								/>
-								<FormFeedback>
-									{errors.salaryScale}
-								</FormFeedback>
-								<label htmlFor='startDate'>
-									<b>Ngày vào công ty</b>
-								</label>
-								<Input
-									type='date'
-									placeholder=''
-									name='startDate'
-									id='startDate'
-									value={this.state.startDate}
-									valid={errors.startDate === ""}
-									invalid={errors.startDate !== ""}
-									//onBlur=={this.handleBlur("startDate")}
-									onChange={this.handleOnChange("startDate")}
-								/>{" "}
-								<FormFeedback>{errors.startDate}</FormFeedback>
-								<label htmlFor='department'>
-									<b>Phòng ban</b>
-								</label>
-								<Input
-									type='select'
-									name='department'
-									id='department'
-									value={this.state.department}
-									//onBlur=={this.handleBlur("department")}
-									onChange={this.handleOnChange("department")}
-								>
-									{this.state.departments.map((value, id) => (
-										<option key={id}>{value.name}</option>
-									))}
-								</Input>
-								<label htmlFor='annualLeave'>
-									<b>Số ngày nghỉ còn lại</b>
-								</label>
-								<Input
-									type='text'
-									placeholder='Nhập số ngày nghỉ còn lại'
-									name='annualLeave'
-									id='annualLeave'
-									value={this.state.annualLeave}
-									valid={errors.annualLeave === ""}
-									invalid={errors.annualLeave !== ""}
-									//onBlur=={this.handleBlur("annualLeave")}
-									onChange={this.handleOnChange(
-										"annualLeave"
-									)}
-								/>{" "}
-								<FormFeedback>
-									{errors.annualLeave}
-								</FormFeedback>
-								<label htmlFor='overTime'>
-									<b>Số ngày đã làm thêm</b>
-								</label>
-								<Input
-									type='text'
-									placeholder='Nhập số ngày làm thêm'
-									name='overTime'
-									id='overTime'
-									value={this.state.overTime}
-									valid={errors.overTime === ""}
-									invalid={errors.overTime !== ""}
-									//onBlur=={this.handleBlur("overTime")}
-									onChange={this.handleOnChange("overTime")}
-								/>{" "}
-								<FormFeedback>{errors.overTime}</FormFeedback>
-								<button type='submit' className='registerbtn'>
-									Thêm nhân viên
-								</button>
+						<div className="row row-content">
+							<div className="col-12 col-md-9">
+								<Form onSubmit={this.handleSubmit}>
+									<FormGroup row>
+										<Label htmlFor="name" md={3}>
+											Name
+										</Label>
+										<Col md={9}>
+											<Input
+												type="text"
+												id="name"
+												name="name"
+												placeholder="Name"
+												value={this.state.name}
+												valid={errors.name === ''}
+												invalid={errors.name !== ''}
+												onBlur={this.handleBlur('name')}
+												onChange={this.handleInputChange}
+											/>
+											<FormFeedback>{errors.name}</FormFeedback>
+										</Col>
+									</FormGroup>
+									<FormGroup row>
+										<Label htmlFor="doB" md={3}>
+											DoB
+										</Label>
+										<Col md={9}>
+											<Input
+												type="date"
+												id="doB"
+												name="doB"
+												value={this.state.doB}
+												valid={errors.doB === ''}
+												invalid={errors.doB !== ''}
+												onBlur={this.handleBlur('doB')}
+												onChange={this.handleInputChange}
+											/>
+											<FormFeedback>{errors.doB}</FormFeedback>
+										</Col>
+									</FormGroup>
+									<FormGroup row>
+										<Label htmlFor="salaryScale" md={3}>
+											Salary Scale
+										</Label>
+										<Col md={9}>
+											<Input
+												type="float"
+												id="salaryScale"
+												name="salaryScale"
+												placeholder="Nhập hệ số lương"
+												value={this.state.salaryScale}
+												valid={errors.salaryScale === ''}
+												invalid={errors.salaryScale !== ''}
+												onBlur={this.handleBlur('salaryScale')}
+												onChange={this.handleInputChange}
+											/>
+											<FormFeedback>{errors.salaryScale}</FormFeedback>
+										</Col>
+									</FormGroup>
+									<FormGroup row>
+										<Label htmlFor="startDate" md={3}>
+											Start Date
+										</Label>
+										<Col md={9}>
+											<Input
+												type="date"
+												id="startDate"
+												name="startDate"
+												value={this.state.startDate}
+												valid={errors.startDate === ''}
+												invalid={errors.startDate !== ''}
+												onBlur={this.handleBlur('startDate')}
+												onChange={this.handleInputChange}
+											/>
+											<FormFeedback>{errors.startDate}</FormFeedback>
+										</Col>
+									</FormGroup>
+									<FormGroup row>
+										<Label htmlFor="department" md={3}>
+											Department
+										</Label>
+										<Col md={9}>
+											<Input
+												type="select"
+												name="department"
+												checked={this.state.department}
+												onChange={this.handleInputChange}
+												onBlur={this.handleBlur('department')}
+											>
+												<option>Select department</option>
+												{this.state.departments.map((department, id) => (
+													<option key={id}>{department.name}</option>
+												))}
+											</Input>
+										</Col>
+									</FormGroup>
+									<FormGroup row>
+										<Label htmlFor="annualLeave" md={3}>
+											AnnualLeave
+										</Label>
+										<Col md={9}>
+											<Input
+												type="text"
+												id="annualLeave"
+												name="annualLeave"
+												placeholder="annualLeave"
+												value={this.state.annualLeave}
+												valid={errors.annualLeave === ''}
+												invalid={errors.annualLeave !== ''}
+												onBlur={this.handleBlur('annualLeave')}
+												onChange={this.handleInputChange}
+											/>
+											<FormFeedback>{errors.annualLeave}</FormFeedback>
+										</Col>
+									</FormGroup>
+									<FormGroup row>
+										<Label htmlFor="overTime" md={3}>
+											OverTime
+										</Label>
+										<Col md={9}>
+											<Input
+												type="text"
+												id="overTime"
+												name="overTime"
+												placeholder="overTime"
+												value={this.state.overTime}
+												valid={errors.overTime === ''}
+												invalid={errors.overTime !== ''}
+												onBlur={this.handleBlur('overTime')}
+												onChange={this.handleInputChange}
+											/>
+											<FormFeedback>{errors.overTime}</FormFeedback>
+										</Col>
+									</FormGroup>
+									<div className="text-center">
+										<Button color="primary" type="submit">
+											Add Staff
+										</Button>{' '}
+									</div>
+								</Form>
 							</div>
-						</form>
+						</div>
 					</ModalBody>
 				</Modal>
-			</React.Fragment>
-		)
+			</div>
+		);
 	}
 }
 
-export default CreateStaffForm
+export default CreateStaff;

@@ -1,26 +1,25 @@
-import React, { Component, useEffect } from "react"
-import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom"
-import "./App.css"
-import Department from "./components/DepartmentComponent"
-import Footer from "./components/FooterComponent"
-import Header from "./components/HeaderComponent"
-import Home from "./components/HomeComponent"
-import Navigation from "./components/NavigationComponent"
-import Salary from "./components/SalaryComponent"
-import Search from "./components/SearchComponent"
-import StaffDetail from "./components/StaffDetailComponent"
-import StaffList from "./components/StaffListComponent"
-import { DEPARTMENTS, STAFFS } from "./shared/staffs"
+import React, { Component } from 'react';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import './App.css';
+import Department from './components/DepartmentComponent';
+import Footer from './components/FooterComponent';
+import Header from './components/HeaderComponent';
+import Home from './components/HomeComponent';
+import Salary from './components/SalaryComponent';
+import StaffDetail from './components/StaffDetailComponent';
+import StaffList from './components/StaffListComponent';
+import { DEPARTMENTS, STAFFS } from './shared/staffs';
+
 class App extends Component {
 	constructor(props) {
-		super(props)
+		super(props);
 		this.state = {
 			staffs: STAFFS,
 			staffSearch: null,
 			departments: DEPARTMENTS,
 			columns: 4,
 			selectedStaff: null,
-		}
+		};
 	}
 	// onSetColumn = column => {
 	// 	console.log(column)
@@ -40,11 +39,12 @@ class App extends Component {
 	// 		staffSearch: value,
 	// 	})
 	// }
-	newStaff = newStaff => {
+
+	newStaff = (newStaff) => {
 		this.setState({
 			staffs: { ...this.state.staffs, newStaff },
-		})
-	}
+		});
+	};
 	render() {
 		const Staff = () => {
 			return (
@@ -55,42 +55,42 @@ class App extends Component {
 					selectStaff={this.selectStaff}
 					newStaff={this.newStaff}
 				/>
-			)
-		}
+			);
+		};
 		const Detail = ({ match }) => {
 			return (
 				<StaffDetail
 					staff={
 						this.state.staffs.filter(
-							staff => staff.id === parseInt(match.params.id, 10)
+							(staff) => staff.id === parseInt(match.params.id, 10)
 						)[0]
 					}
 				/>
-			)
-		}
+			);
+		};
 		const DepartmentList = () => {
-			return <Department department={this.state.departments} />
-		}
+			return <Department department={this.state.departments} />;
+		};
 		const SalaryDetail = () => {
-			return <Salary staffs={this.state.staffs} />
-		}
+			return <Salary staffs={this.state.staffs} />;
+		};
 		return (
 			<BrowserRouter>
-				<div className='App'>
+				<div className="App">
 					<Header />
 					<Switch>
-						<Route path='/' exact component={Home} />
-						<Route path='/staffs' exact component={Staff} />
-						<Route path='/staffs/:id' component={Detail} />
-						<Route path='/departments' component={DepartmentList} />
-						<Route path='/salary' component={SalaryDetail} />
-						<Redirect to='/' />
+						<Route path="/" exact component={Home} />
+						<Route path="/staffs" exact component={Staff} />
+						<Route path="/staffs/:id" component={Detail} />
+						<Route path="/departments" component={DepartmentList} />
+						<Route path="/salary" component={SalaryDetail} />
+						<Redirect to="/" />
 					</Switch>
 					<Footer />
 				</div>
 			</BrowserRouter>
-		)
+		);
 	}
 }
 
-export default App
+export default App;
