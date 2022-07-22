@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
+import { Control, LocalForm } from 'react-redux-form';
 import {
 	Button,
 	Col,
-	Form,
 	FormFeedback,
-	FormGroup,
-	Input,
 	Label,
 	Modal,
 	ModalBody,
 	ModalHeader,
+	Row,
 } from 'reactstrap';
-import { DEPARTMENTS } from '../shared/staffs';
 import { v4 as uuid } from 'uuid';
+import { DEPARTMENTS } from '../shared/staffs';
 class CreateStaff extends Component {
 	constructor(props) {
 		super(props);
@@ -155,144 +154,154 @@ class CreateStaff extends Component {
 					<ModalBody>
 						<div className="row row-content">
 							<div className="col-12 col-md-9">
-								<Form onSubmit={this.handleSubmit}>
-									<FormGroup row>
+								<LocalForm onSubmit={this.handleSubmit}>
+									<Row className="form-group">
 										<Label htmlFor="name" md={3}>
 											Name
 										</Label>
 										<Col md={9}>
-											<Input
-												type="text"
+											<Control.text
+												className="form-control"
+												modal=".name"
 												id="name"
 												name="name"
 												placeholder="Name"
-												value={this.state.name}
-												valid={errors.name === ''}
-												invalid={errors.name !== ''}
-												onBlur={this.handleBlur('name')}
-												onChange={this.handleInputChange}
+												// value={this.state.name}
+												// valid={errors.name === ''}
+												// invalid={errors.name !== ''}
+												// onBlur={this.handleBlur('name')}
+												// onChange={this.handleInputChange}
 											/>
 											<FormFeedback>{errors.name}</FormFeedback>
 										</Col>
-									</FormGroup>
-									<FormGroup row>
+									</Row>
+									<Row className="form-group">
 										<Label htmlFor="doB" md={3}>
 											DoB
 										</Label>
 										<Col md={9}>
-											<Input
+											<Control
 												type="date"
 												id="doB"
 												name="doB"
-												value={this.state.doB}
-												valid={errors.doB === ''}
-												invalid={errors.doB !== ''}
-												onBlur={this.handleBlur('doB')}
-												onChange={this.handleInputChange}
+												modal=".doB"
+												className="form-control"
+												// value={this.state.doB}
+												// valid={errors.doB === ''}
+												// invalid={errors.doB !== ''}
+												// onBlur={this.handleBlur('doB')}
+												// onChange={this.handleInputChange}
 											/>
 											<FormFeedback>{errors.doB}</FormFeedback>
 										</Col>
-									</FormGroup>
-									<FormGroup row>
+									</Row>
+									<Row className="form-group">
 										<Label htmlFor="salaryScale" md={3}>
 											Salary Scale
 										</Label>
 										<Col md={9}>
-											<Input
+											<Control
 												type="float"
+												modal=".salaryScale"
 												id="salaryScale"
 												name="salaryScale"
 												placeholder="Nhập hệ số lương"
-												value={this.state.salaryScale}
-												valid={errors.salaryScale === ''}
-												invalid={errors.salaryScale !== ''}
-												onBlur={this.handleBlur('salaryScale')}
-												onChange={this.handleInputChange}
+												className="form-control"
+												// value={this.state.salaryScale}
+												// valid={errors.salaryScale === ''}
+												// invalid={errors.salaryScale !== ''}
+												// onBlur={this.handleBlur('salaryScale')}
+												// onChange={this.handleInputChange}
 											/>
 											<FormFeedback>{errors.salaryScale}</FormFeedback>
 										</Col>
-									</FormGroup>
-									<FormGroup row>
+									</Row>
+									<Row className="form-group">
 										<Label htmlFor="startDate" md={3}>
 											Start Date
 										</Label>
 										<Col md={9}>
-											<Input
+											<Control
 												type="date"
+												modal=".startDate"
 												id="startDate"
 												name="startDate"
-												value={this.state.startDate}
-												valid={errors.startDate === ''}
-												invalid={errors.startDate !== ''}
-												onBlur={this.handleBlur('startDate')}
-												onChange={this.handleInputChange}
+												className="form-control"
+												// value={this.state.startDate}
+												// valid={errors.startDate === ''}
+												// invalid={errors.startDate !== ''}
+												// onBlur={this.handleBlur('startDate')}
+												// onChange={this.handleInputChange}
 											/>
 											<FormFeedback>{errors.startDate}</FormFeedback>
 										</Col>
-									</FormGroup>
-									<FormGroup row>
+									</Row>
+									<Row className="form-group">
 										<Label htmlFor="department" md={3}>
 											Department
 										</Label>
 										<Col md={9}>
-											<Input
-												type="select"
+											<Control.select
+												className="form-control"
+												modal=".department"
 												name="department"
-												checked={this.state.department}
-												onChange={this.handleInputChange}
-												onBlur={this.handleBlur('department')}
+												// checked={this.state.department}
+												// onChange={this.handleInputChange}
+												// onBlur={this.handleBlur('department')}
 											>
 												<option>Select department</option>
 												{this.state.departments.map((department, id) => (
 													<option key={id}>{department.name}</option>
 												))}
-											</Input>
+											</Control.select>
 										</Col>
-									</FormGroup>
-									<FormGroup row>
+									</Row>
+									<Row className="form-group">
 										<Label htmlFor="annualLeave" md={3}>
 											AnnualLeave
 										</Label>
 										<Col md={9}>
-											<Input
-												type="text"
+											<Control.text
+												className="form-control"
 												id="annualLeave"
 												name="annualLeave"
 												placeholder="annualLeave"
-												value={this.state.annualLeave}
-												valid={errors.annualLeave === ''}
-												invalid={errors.annualLeave !== ''}
-												onBlur={this.handleBlur('annualLeave')}
-												onChange={this.handleInputChange}
+												modal=".annualLeave"
+												// value={this.state.annualLeave}
+												// valid={errors.annualLeave === ''}
+												// invalid={errors.annualLeave !== ''}
+												// onBlur={this.handleBlur('annualLeave')}
+												// onChange={this.handleInputChange}
 											/>
 											<FormFeedback>{errors.annualLeave}</FormFeedback>
 										</Col>
-									</FormGroup>
-									<FormGroup row>
+									</Row>
+									<Row className="form-group">
 										<Label htmlFor="overTime" md={3}>
 											OverTime
 										</Label>
 										<Col md={9}>
-											<Input
-												type="text"
+											<Control.text
+												className="form-control"
 												id="overTime"
 												name="overTime"
 												placeholder="overTime"
-												value={this.state.overTime}
-												valid={errors.overTime === ''}
-												invalid={errors.overTime !== ''}
-												onBlur={this.handleBlur('overTime')}
-												onChange={this.handleInputChange}
+												modal=".overTime"
+												// value={this.state.overTime}
+												// valid={errors.overTime === ''}
+												// invalid={errors.overTime !== ''}
+												// onBlur={this.handleBlur('overTime')}
+												// onChange={this.handleInputChange}
 											/>
 											<FormFeedback>{errors.overTime}</FormFeedback>
 										</Col>
-									</FormGroup>
+									</Row>
 									<div className="text-center">
 										<Button color="primary" type="submit">
 											Add Staff
 										</Button>{' '}
 									</div>
-								</Form>
+								</LocalForm>
 							</div>
 						</div>
 					</ModalBody>

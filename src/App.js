@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import {
+	BrowserRouter,
+	Redirect,
+	Route,
+	Switch,
+	withRouter,
+} from 'react-router-dom';
 import './App.css';
 import Department from './components/DepartmentComponent';
 import Footer from './components/FooterComponent';
@@ -9,6 +15,18 @@ import Salary from './components/SalaryComponent';
 import StaffDetail from './components/StaffDetailComponent';
 import StaffList from './components/StaffListComponent';
 import { DEPARTMENTS, STAFFS } from './shared/staffs';
+import { Provider } from 'react-redux';
+import { ConfigureStore } from './redux/configureStore';
+import { connect } from 'react-redux';
+const store = ConfigureStore();
+
+const mapStateToProps = (state) => {
+	return {
+		staffs: state.staffs,
+		newStaff: state.newStaff,
+		selectedStaff: state.selectedStaff,
+	};
+};
 
 class App extends Component {
 	constructor(props) {
@@ -21,24 +39,6 @@ class App extends Component {
 			selectedStaff: null,
 		};
 	}
-	// onSetColumn = column => {
-	// 	console.log(column)
-	// 	this.setState({ columns: column })
-	// }
-	// selectStaff = id => {
-	// 	console.log("id nè: ", this.state.selectedStaff)
-	// 	this.setState({ selectedStaff: id })
-	// }
-
-	// componentDidMount() {
-	// 	console.log(this.state.staffSearch)
-	// }
-
-	// getStaffSearch = value => {
-	// 	this.setState({
-	// 		staffSearch: value,
-	// 	})
-	// }
 
 	newStaff = (newStaff) => {
 		this.setState({
@@ -75,22 +75,20 @@ class App extends Component {
 			return <Salary staffs={this.state.staffs} />;
 		};
 		return (
-			<BrowserRouter>
-				<div className="App">
-					<Header />
-					<Switch>
-						<Route path="/" exact component={Home} />
-						<Route path="/staffs" exact component={Staff} />
-						<Route path="/staffs/:id" component={Detail} />
-						<Route path="/departments" component={DepartmentList} />
-						<Route path="/salary" component={SalaryDetail} />
-						<Redirect to="/" />
-					</Switch>
-					<Footer />
-				</div>
-			</BrowserRouter>
+			<div className="App">
+				<Header />
+				<Switch>
+					<Route path="/" exact component={Home} />
+					<Route path="/staffs" exact component={Staff} />
+					<Route path="/staffs/:id" component={Detail} />
+					<Route path="/departments" component={DepartmentList} />
+					<Route path="/salary" component={SalaryDetail} />
+					<Redirect to="/" />
+				</Switch>
+				<Footer />
+			</div>
 		);
 	}
 }
 
-export default App;
+export default withRouter(connect(mapStateToProps)(App));
